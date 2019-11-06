@@ -11,14 +11,9 @@ env:
 - DISTRI=centos DESKTOP=xfce
 - DISTRI=centos DESKTOP=icewm
 
+before_install:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 script:
-  - docker build -t local/${DISTRI}-${DESKTOP}-vnc -f ./Dockerfile.${DISTRI}.${DESKTOP}.vnc .
+  - bash travis/build-images.sh ${DISTRI} ${DESKTOP}
 after_success:
-  - bash .build/trigger_dockerhub.sh ${DISTRI}-${DESKTOP}-vnc
-
-## use standard notification to committer
-#notifications:
-#    recipients:
-#      - "testautomatisierung@consol.de"
-#    on_success: change # default: change
-#    on_failure: always # default: always
+  - bash travis/push-images.sh ${DISTRI} ${DESKTOP}
