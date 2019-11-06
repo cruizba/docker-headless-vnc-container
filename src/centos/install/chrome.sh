@@ -3,6 +3,8 @@
 set -e
 
 echo "Install Chromium Browser"
+yum -y update
+yum install -y epel-release
 yum -y install chromium chromium-libs chromium-libs-media
 yum clean all
 
