@@ -12,3 +12,7 @@ fi
 
 echo "Pushing in docker hub $BASE_NAME"
 docker push $BASE_NAME
+
+if [[ ! -z "$TRAVIS_TAG" ]]; then
+    docker push cruizba/ptaki-$DIST-$DESKTOP-vnc:latest
+fi
